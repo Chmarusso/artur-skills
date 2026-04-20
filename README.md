@@ -1,0 +1,67 @@
+# artur-skills
+
+These are the Claude Code agent skills I use every day. Sharing them here so I can re-install them on any machine and so others can grab whatever looks useful.
+
+Some are checked into this repo; others are installed from their official upstream repos.
+
+## Skills in this repo
+
+| Skill | What it does |
+|---|---|
+| `make-pr` | Create or update a PR for the current branch with a business-focused description |
+| `fix-tests` | Run tests stopping at first failure, fix it, repeat until all pass |
+| `apply-code-review` | Fetch PR review comments and apply the suggested changes |
+| `use-railway` | Operate Railway infrastructure (projects, services, envs, domains, logs) |
+| `railway-deploy` | Push code to Railway (`railway up`, deploy, ship) |
+| `railway-status` | Check Railway deployment status and uptime |
+
+### Install
+
+Agent skills live in `~/.claude/skills/`. Pick one of:
+
+**Option A — symlink (recommended, tracks changes in this repo):**
+
+```bash
+cd ~/.claude/skills
+for skill in make-pr fix-tests apply-code-review use-railway railway-deploy railway-status; do
+  ln -s ~/Documents/code/artur-skills/$skill $skill
+done
+```
+
+**Option B — copy:**
+
+```bash
+cp -R ~/Documents/code/artur-skills/{make-pr,fix-tests,apply-code-review,use-railway,railway-deploy,railway-status} ~/.claude/skills/
+```
+
+Verify in Claude Code with `/help` or by triggering a skill (e.g. `/make-pr`).
+
+## Skills installed from official repos
+
+These aren't vendored here — install them directly from upstream so they stay current.
+
+| Skill | Source | Install |
+|---|---|---|
+| `find-skills` | [vercel-labs/skills](https://github.com/vercel-labs/skills) | `npx skills add vercel-labs/skills --skill find-skills` |
+| `remotion-best-practices` | [remotion-dev/skills](https://github.com/remotion-dev/skills) | `npx skills add remotion-dev/skills --skill remotion-best-practices` |
+| `playwright-skill` | [lackeyjb/playwright-skill](https://github.com/lackeyjb/playwright-skill) | `/plugin marketplace add lackeyjb/playwright-skill` then `/plugin install playwright-skill@playwright-skill` |
+| `landing-page-copywriter` | [onewave-ai/claude-skills](https://github.com/onewave-ai/claude-skills) | `npx skills add onewave-ai/claude-skills --skill landing-page-copywriter` |
+| `write-a-prd` | [mattpocock/skills](https://github.com/mattpocock/skills) | `npx skills add mattpocock/skills --skill to-prd` (renamed upstream) |
+| `prd-to-plan` | [mattpocock/skills](https://github.com/mattpocock/skills) | `npx skills add mattpocock/skills --skill prd-to-plan` |
+
+> Note: `write-a-prd` appears to have been renamed to `to-prd` in Matt Pocock's current repo. If you need the original `write-a-prd` filename, use a fork like [mateuszmidor/mattpocock_skills](https://github.com/mateuszmidor/mattpocock_skills) that preserves the old name.
+
+## Skill structure reference
+
+Each skill is a directory containing at minimum a `SKILL.md` with frontmatter:
+
+```markdown
+---
+name: skill-name
+description: When Claude should invoke this skill.
+---
+
+Instructions for Claude...
+```
+
+See the [Agent Skills docs](https://code.claude.com/docs/en/skills) for the full spec.
